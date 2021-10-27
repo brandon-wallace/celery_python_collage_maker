@@ -30,8 +30,8 @@ def resize_image(image_file, size=500, border=10, bg=(0, 0, 0, 0)):
     return filename
 
 
-@celery.task()
-def merge_images(images):
+@celery.task(bind=True)
+def merge_images(self, images):
     '''Create collage by merging images together'''
 
     time.sleep(10)
@@ -47,4 +47,4 @@ def merge_images(images):
         x_axis += img.width
     filename = f'collage_{datetime.utcnow().strftime("%Y%m%d%H%M%S%f")}.png'
     merged_image.save(f'{filename}')
-    return 'DONE'
+    return 'COMPLETED'
