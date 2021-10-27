@@ -7,18 +7,6 @@ from PIL import Image, ImageOps
 celery = Celery('tasks', backend='rpc://', broker='pyamqp://guest@127.0.0.1')
 
 
-def resize_image(image_file, size=500, border=10, bg=(0, 0, 0, 0)):
-    '''Resize images to square shapes'''
-
-    image = Image.open(image_file)
-    image_png = image.convert('RGBA')
-    image_resized = image_png.resize((size, size))
-    image_with_border = ImageOps.expand(image_resized, border=border, fill=bg)
-    filename = f'resized_{datetime.utcnow().strftime("%Y%m%d%H%M%S%f")}.png'
-    image_with_border.save(f'{filename}')
-    return filename
-
-
 def open_file(filename):
     '''Open image file with pillow'''
 
@@ -28,6 +16,18 @@ def open_file(filename):
     except FileNotFoundError as e:
         print(e)
         exit()
+
+
+def resize_image(image_file, size=500, border=10, bg=(0, 0, 0, 0)):
+    '''Resize images to square shapes'''
+
+    image = open_file(image_file)
+    image_png = image.convert('RGBA')
+    image_resized = image_png.resize((size, size))
+    image_with_border = ImageOps.expand(image_resized, border=border, fill=bg)
+    filename = f'resized_{datetime.utcnow().strftime("%Y%m%d%H%M%S%f")}.png'
+    image_with_border.save(f'{filename}')
+    return filename
 
 
 @celery.task()

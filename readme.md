@@ -3,9 +3,9 @@
 <p align="center">Asynchronously create image collages with Python, Celery, Pillow, and RabbitMQ.</p>
 
 
-## Screenshots
+## Example Image
 
-![sample image](sample_collage.png "sample collage image")
+![example image](example_collage.png "example collage image")
 
 
 ## Built With

@@ -2,7 +2,9 @@ from project.tasks import resize_image, merge_images
 
 
 def main():
+    '''Main function to run application'''
 
+    # Temporary hard coded image filenames!!!!
     images = ['pic1.jpg', 'pic2.jpg', 'pic3.jpg']
     resized = []
     for img in images:
